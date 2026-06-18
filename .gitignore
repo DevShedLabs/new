@@ -1,0 +1,11 @@
+# Binary
+new
+dist/
+
+# Go
+*.test
+*.out
+coverage.html
+
+# OS
+.DS_Store

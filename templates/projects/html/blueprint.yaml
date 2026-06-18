@@ -1,0 +1,6 @@
+name: html
+description: A minimal HTML5 project with CSS and JS entry points.
+vars:
+  - Name
+defaults:
+  Author: ""

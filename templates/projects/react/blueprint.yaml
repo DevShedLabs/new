@@ -1,0 +1,6 @@
+name: react
+description: A Vite + React + TypeScript starter project.
+vars:
+  - Name
+defaults:
+  Author: ""
