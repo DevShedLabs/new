@@ -1,5 +1,9 @@
 # new
 
+![Version](https://img.shields.io/github/v/tag/DevShedLabs/new?label=version&sort=semver)
+![License](https://img.shields.io/github/license/DevShedLabs/new)
+![Go](https://img.shields.io/badge/built%20with-Go-00ADD8)
+
 A fast, single-binary CLI for scaffolding files and projects.
 
 ```sh
@@ -19,7 +23,7 @@ Or build from source:
 
 ```sh
 git clone https://github.com/DevShedLabs/new
-cd New
+cd new
 go build -o new .
 ```
 
@@ -39,9 +43,20 @@ new app.ts           # TypeScript module stub
 new script.sh        # Bash shebang + set -euo pipefail
 new data.json        # Empty JSON object
 new notes.md         # Markdown heading
+new index.php        # Empty file (no built-in template)
 ```
 
 Any extension without a built-in template creates an empty file.
+
+### Create a directory
+
+A trailing slash or a name with no extension creates a directory (`mkdir -p`).
+
+```sh
+new assets/css/           # creates assets/css/
+new src/components/       # creates src/components/
+new src/components/Button # no extension — creates a directory
+```
 
 ### Scaffold a project
 
@@ -54,6 +69,37 @@ new my-app --template my-blueprint   # user blueprint from ~/.new/blueprints/
 ```
 
 The project is created as a subdirectory of the current working directory.
+
+### List available templates and blueprints
+
+```sh
+new list
+```
+
+Shows all built-in templates and any user blueprints in `~/.new/blueprints/`, with descriptions.
+
+### Capture a project as a blueprint
+
+```sh
+new blueprint capture <name>          # capture current directory
+new blueprint capture <name> <path>   # capture a specific directory
+```
+
+Snapshots a project into `~/.new/blueprints/<name>/` so it can be reused as a template. Build artifacts (`node_modules`, `.git`, `vendor`, `dist`, `build`, `.next`, `__pycache__`, `.venv`) are excluded automatically. A `blueprint.yaml` manifest is generated if one doesn't exist.
+
+### Check the installed version
+
+```sh
+new --version
+```
+
+### Update to the latest version
+
+```sh
+new update
+```
+
+Installs the latest tagged release directly from GitHub, bypassing any local cache.
 
 ### Flags
 
@@ -90,7 +136,7 @@ Blueprints are user-defined templates that live in `~/.new/blueprints/`. Any blu
 
 This means you can override any built-in template by creating a blueprint with the same name.
 
-### Creating a blueprint
+### Creating a blueprint manually
 
 A blueprint is just a folder of files. Template variables are rendered using Go's `text/template` syntax — `{{.Name}}`, `{{.Author}}`, etc.
 
@@ -136,8 +182,6 @@ defaults:
 
 ## Roadmap
 
-- `new list` — show available built-in templates and user blueprints
-- `new blueprint capture` — snapshot an existing project into a blueprint
 - Icon and favicon generation
 - Variable prompting for blueprints that declare `vars`
 - Remote blueprint fetching
