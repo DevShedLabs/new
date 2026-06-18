@@ -20,18 +20,45 @@ func SetTemplates(fsys fs.FS) {
 	embeddedTemplates = fsys
 }
 
-// Generator handles single-file creation.
+// Generator handles single-file and directory creation.
 type Generator struct{}
 
 func (g *Generator) Name() string { return "file" }
 
-// Detect returns true when no --template flag is set, meaning the user wants
-// a single file rather than a full project.
+// Detect returns true when no --template flag is set.
 func (g *Generator) Detect(ctx *generator.Context) bool {
 	return ctx.Template == ""
 }
 
 func (g *Generator) Generate(ctx *generator.Context) error {
+	if isDir(ctx.Name) {
+		return makeDir(ctx)
+	}
+	return makeFile(ctx)
+}
+
+// isDir returns true when the name has a trailing slash or no file extension,
+// indicating the user wants a directory rather than a file.
+func isDir(name string) bool {
+	return strings.HasSuffix(name, "/") || strings.HasSuffix(name, string(os.PathSeparator)) || filepath.Ext(name) == ""
+}
+
+func makeDir(ctx *generator.Context) error {
+	dest := filepath.Join(ctx.OutputDir, ctx.Name)
+
+	if _, err := os.Stat(dest); err == nil {
+		return fmt.Errorf("directory already exists: %s", dest)
+	}
+
+	if err := os.MkdirAll(dest, 0o755); err != nil {
+		return err
+	}
+
+	fmt.Printf("created %s\n", dest)
+	return nil
+}
+
+func makeFile(ctx *generator.Context) error {
 	dest := filepath.Join(ctx.OutputDir, ctx.Name)
 
 	if _, err := os.Stat(dest); err == nil {
