@@ -9,6 +9,20 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// embeddedProjects is set by main via SetEmbedded.
+var embeddedProjects fs.FS
+
+// SetEmbedded wires in the embedded templates/projects sub-filesystem so that
+// List and Resolve can reference built-in templates.
+func SetEmbedded(fsys fs.FS) {
+	embeddedProjects = fsys
+}
+
+// Embedded returns the registered embedded projects FS.
+func Embedded() fs.FS {
+	return embeddedProjects
+}
+
 // Manifest is the optional blueprint.yaml descriptor inside a blueprint folder.
 type Manifest struct {
 	Name        string            `yaml:"name"`
@@ -59,6 +73,24 @@ func Resolve(name string, embedded fs.FS) (*Blueprint, error) {
 	}
 
 	return nil, errors.New("blueprint not found: " + name)
+}
+
+// ListEmbedded returns names of all built-in templates in the provided embedded FS.
+func ListEmbedded(embedded fs.FS) ([]string, error) {
+	if embedded == nil {
+		return nil, nil
+	}
+	entries, err := fs.ReadDir(embedded, ".")
+	if err != nil {
+		return nil, err
+	}
+	var names []string
+	for _, e := range entries {
+		if e.IsDir() {
+			names = append(names, e.Name())
+		}
+	}
+	return names, nil
 }
 
 // ListUserBlueprints returns names of all blueprints in ~/.new/blueprints/.

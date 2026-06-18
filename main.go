@@ -5,6 +5,7 @@ import (
 	"io/fs"
 
 	"github.com/DevShedLabs/new/cmd"
+	"github.com/DevShedLabs/new/internal/blueprint"
 	"github.com/DevShedLabs/new/internal/file"
 	"github.com/DevShedLabs/new/internal/generator"
 	"github.com/DevShedLabs/new/internal/scaffold"
@@ -20,6 +21,7 @@ func main() {
 
 	file.SetTemplates(filesFS)
 	scaffold.SetTemplates(projectsFS)
+	blueprint.SetEmbedded(projectsFS)
 
 	// Register generators in priority order.
 	// Scaffold is checked first so --template always wins.
