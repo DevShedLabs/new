@@ -9,6 +9,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Version is set at build time via -ldflags "-X github.com/DevShedLabs/new/cmd.Version=x.y.z"
+var Version = "dev"
+
 var (
 	flagTemplate string
 	flagOutput   string
@@ -62,6 +65,7 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.Version = Version
 	rootCmd.Flags().StringVarP(&flagTemplate, "template", "t", "", "Template or blueprint name to scaffold a project")
 	rootCmd.Flags().StringVarP(&flagOutput, "output", "o", "", "Output directory (defaults to current directory)")
 	rootCmd.Flags().StringArrayVarP(&flagVars, "var", "v", nil, "Template variables as key=value pairs (repeatable)")
