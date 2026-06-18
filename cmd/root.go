@@ -3,14 +3,19 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"runtime/debug"
 	"strings"
 
 	"github.com/DevShedLabs/new/internal/generator"
 	"github.com/spf13/cobra"
 )
 
-// Version is set at build time via -ldflags "-X github.com/DevShedLabs/new/cmd.Version=x.y.z"
-var Version = "dev"
+func buildVersion() string {
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" && info.Main.Version != "(devel)" {
+		return info.Main.Version
+	}
+	return "dev"
+}
 
 var (
 	flagTemplate string
@@ -65,7 +70,7 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Version = Version
+	rootCmd.Version = buildVersion()
 	rootCmd.Flags().StringVarP(&flagTemplate, "template", "t", "", "Template or blueprint name to scaffold a project")
 	rootCmd.Flags().StringVarP(&flagOutput, "output", "o", "", "Output directory (defaults to current directory)")
 	rootCmd.Flags().StringArrayVarP(&flagVars, "var", "v", nil, "Template variables as key=value pairs (repeatable)")
