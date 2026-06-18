@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/DevShedLabs/New/internal/generator"
+	"github.com/DevShedLabs/new/internal/generator"
 	"github.com/spf13/cobra"
 )
 

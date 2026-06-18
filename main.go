@@ -4,10 +4,10 @@ import (
 	"embed"
 	"io/fs"
 
-	"github.com/DevShedLabs/New/cmd"
-	"github.com/DevShedLabs/New/internal/file"
-	"github.com/DevShedLabs/New/internal/generator"
-	"github.com/DevShedLabs/New/internal/scaffold"
+	"github.com/DevShedLabs/new/cmd"
+	"github.com/DevShedLabs/new/internal/file"
+	"github.com/DevShedLabs/new/internal/generator"
+	"github.com/DevShedLabs/new/internal/scaffold"
 )
 
 //go:embed templates

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DevShedLabs/New/internal/generator"
+	"github.com/DevShedLabs/new/internal/generator"
 )
 
 // embeddedTemplates is set by the main package via SetTemplates.

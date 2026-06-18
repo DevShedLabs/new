@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/DevShedLabs/New/internal/blueprint"
-	"github.com/DevShedLabs/New/internal/generator"
+	"github.com/DevShedLabs/new/internal/blueprint"
+	"github.com/DevShedLabs/new/internal/generator"
 )
 
 // embeddedProjects is set by the main package via SetTemplates.

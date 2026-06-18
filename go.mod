@@ -1,4 +1,4 @@
-module github.com/DevShedLabs/New
+module github.com/DevShedLabs/new
 
 go 1.26.3
 

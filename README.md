@@ -12,13 +12,13 @@ new my-app --template react
 ## Installation
 
 ```sh
-go install github.com/DevShedLabs/New@latest
+go install github.com/DevShedLabs/new@latest
 ```
 
 Or build from source:
 
 ```sh
-git clone https://github.com/DevShedLabs/New
+git clone https://github.com/DevShedLabs/new
 cd New
 go build -o new .
 ```
